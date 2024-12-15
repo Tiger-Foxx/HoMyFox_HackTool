@@ -59,8 +59,11 @@ class HoMyFoxServer:
 
                 else:
                     self.client.send(command.encode())
-                    response = self.client.recv(4096).decode()
-                    print(response)
+                    try:
+                        response = self.client.recv(4096).decode()
+                        print(response)
+                    except :
+                        pass
 
             except Exception as e:
                 print(f"[-] Error: {e}")

