@@ -1,4 +1,4 @@
-Voici un **README.md** qui donne un côté amusant et "hacker" à ton projet "HO MY FOX" pour GitHub :
+
 
 
 # 🦊 HO MY FOX - ADVANCED NETWORK ATTACK TOOL 🌐
